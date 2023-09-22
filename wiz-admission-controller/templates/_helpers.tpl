@@ -135,17 +135,16 @@ Create the name of the service account to use
 {{ include "helpers.calculateHash" (list .Values.global.wizApiToken.clientId .Values.global.wizApiToken.clientToken .Values.global.wizApiToken.secret.name .Values.wizApiToken.clientId .Values.wizApiToken.clientToken .Values.wizApiToken.secret.name) }}
 {{- end }}
 
+{{- define "wiz-admission-controller.cert" -}}
+{{- $altNames := list ( printf "%s.%s" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) -}}
+{{- $ca := genCA "wiz-admission-controller-ca" 3650 -}}
+{{- $cert := genSignedCert ( include "wiz-admission-controller.fullname" . ) nil $altNames 3650 $ca -}}
+{{- end -}}
+
 {{/*
 This function dump the value of a variable and fail the template execution.
 Use for debug purpose only.
 */}}
 {{- define "helpers.var_dump" -}}
 {{- . | mustToPrettyJson | printf "\nThe JSON output of the dumped var is: \n%s" | fail }}
-{{- end -}}
-
-
-{{- define "wiz-admission-controller.cert" -}}
-{{- $altNames := list ( printf "%s.%s" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) -}}
-{{- $ca := genCA "wiz-admission-controller-ca" 3650 -}}
-{{- $cert := genSignedCert ( include "wiz-admission-controller.fullname" . ) nil $altNames 3650 $ca -}}
 {{- end -}}
