@@ -2,9 +2,9 @@
 {{- $tlsCrt := .Values.tlsCertificate.tlsCertificate -}}
 {{- $tlsKey := .Values.tlsCertificate.tlsKey -}}
 {{- if .Values.tlsCertificate.create -}}
-{{- $crt := (include "wiz-admission-controller.cert" .) -}}
-{{- $tlsCrt = $crt.Cert | b64enc -}}
-{{- $tlsKey = $crt.Key | b64enc -}}
+{{- include "wiz-admission-controller.cert" -}}
+{{- $tlsCrt = $cert.Cert | b64enc -}}
+{{- $tlsKey = $cert.Key | b64enc -}}
 {{- end -}}
 
 {{ if .Values.opaWebhook.enabled -}}
