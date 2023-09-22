@@ -1,7 +1,9 @@
 {{- $useCertManagerCerts := .Values.webhook.injectCaFrom -}}
 {{- $tlsCrt := .Values.tlsCertificate.tlsCertificate -}}
 {{- $tlsKey := .Values.tlsCertificate.tlsKey -}}
-
+{{- if .Values.tlsCertificate.create -}}
+{{- $tlsCrt := include "wiz-admission-controller.tlsCrt" . -}}
+{{- $tlsKey := include "wiz-admission-controller.tlsKey" . -}}
 {{ if .Values.opaWebhook.enabled -}}
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration

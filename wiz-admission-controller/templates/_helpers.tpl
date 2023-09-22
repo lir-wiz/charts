@@ -144,7 +144,6 @@ Use for debug purpose only.
 {{- end -}}
 
 
-{{- if .Values.tlsCertificate.create -}}
 
 {{- $altNames := list ( printf "%s.%s" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) -}}
 {{- $ca := genCA "wiz-admission-controller-ca" 3650 -}}
@@ -153,8 +152,8 @@ Use for debug purpose only.
 {{- define "wiz-admission-controller.tlsCrt" -}}
 {{- $cert.Cert | b64enc -}}
 {{- end -}}
+
 {{- define "wiz-admission-controller.tlsKey" -}}
 {{- $cert.Key | b64enc -}}
 {{- end -}}
 
-{{- end -}}
