@@ -136,9 +136,9 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "wiz-admission-controller.cert" -}}
-{{- $altNames := list ( printf "%s.%s" (include ".fullname" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) -}}
+{{- $altNames := list ( printf "%s.%s" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) -}}
 {{- $ca := genCA "wiz-admission-controller-ca" 3650 -}}
-{{- genSignedCert ( include ".fullname" . ) nil $altNames 3650 $ca -}}
+{{- genSignedCert ( include "wiz-admission-controller.fullname" . ) nil $altNames 3650 $ca -}}
 {{- end -}}
 
 {{/*
