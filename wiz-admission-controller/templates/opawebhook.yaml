@@ -2,7 +2,7 @@
 {{- $tlsCrt := .Values.tlsCertificate.tlsCertificate -}}
 {{- $tlsKey := .Values.tlsCertificate.tlsKey -}}
 {{- if .Values.tlsCertificate.create -}}
-{{- $crt = (include "wiz-admission-controller.cert" .) -}}
+{{- $crt := (include "wiz-admission-controller.cert" .) -}}
 {{- $tlsCrt = $crt.Crt | b64enc -}}
 {{- $tlsKey = $crt.Key | b64enc -}}
 {{- end -}}
