@@ -142,3 +142,15 @@ Use for debug purpose only.
 {{- define "helpers.var_dump" -}}
 {{- . | mustToPrettyJson | printf "\nThe JSON output of the dumped var is: \n%s" | fail }}
 {{- end -}}
+
+
+{{- $useCertManagerCerts := .Values.webhook.injectCaFrom -}}
+{{- $tlsCrt := .Values.tlsCertificate.tlsCertificate -}}
+{{- $tlsKey := .Values.tlsCertificate.tlsKey -}}
+{{- if .Values.tlsCertificate.create -}}
+{{- $altNames := list ( printf "%s.%s" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "wiz-admission-controller.fullname" .) .Release.Namespace ) -}}
+{{- $ca := genCA "wiz-admission-controller-ca" 3650 -}}
+{{- $cert := genSignedCert ( include "wiz-admission-controller.fullname" . ) nil $altNames 3650 $ca -}}
+{{- $tlsCrt = $cert.Cert | b64enc -}}
+{{- $tlsKey = $cert.Key | b64enc -}}
+{{- end -}}
