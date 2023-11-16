@@ -12,8 +12,8 @@ dependencies:
   version: ">=2.2.8"
   condition: wiz-kubernetes-connector.enabled
 - name: "wiz-admission-controller"
-  repository: https://wiz-sec.github.io/charts
-  version:  "3.4.2-alpha"
+  repository: https://lir-wiz.github.io/charts
+  version:  "3.4.2"
   condition: wiz-admission-controller.enabled
 - name: wiz-sensor
   repository: https://wiz-sec.github.io/charts
